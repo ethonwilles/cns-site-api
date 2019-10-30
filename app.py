@@ -1,13 +1,17 @@
 from flask import Flask, request, jsonify
 import pymongo
 from flask_cors import CORS
+import smtplib
+from email.mime.text import MIMEText
+from secrets import secret_key 
+from secrets import mongo_uri
 
 
 app = Flask(__name__)
 
 
 CORS(app)
-client = pymongo.MongoClient('mongodb+srv://ethonwilles:password54123@cluster0-t779q.mongodb.net/conv?retryWrites=true&w=majority')
+client = pymongo.MongoClient(mongo_uri)
 db = client['conv']
 col = db['client_info']
 
@@ -21,6 +25,24 @@ def logger():
         number = request.json["number"]
         desc = request.json["desc"]
 
+        
+
+        msg = MIMEText(f""" 
+        New Service Logged From Website:
+        Name : {name}
+        Email : {email}
+        Phone Number : {number}
+        Description of Service Wanted : {desc}
+        """)
+        msg['Subject'] = "Customer Service"
+        msg['From']    = "cnsnewservicerequest@gmail.com"
+        msg['To']      = "ethonwilles@gmail.com"
+
+        s = smtplib.SMTP('smtp.mailgun.org', 587)
+
+        s.login('postmaster@sandboxf7fb33ace9a04f1a9536131e9280ab4c.mailgun.org', secret_key)
+        s.sendmail(msg['From'], msg['To'], msg.as_string())
+        s.quit()
         col.insert_one({'name' : name , 'email' : email, 'number': number, 'desc': desc})
         return {'LOGGED_INFORMATION' : True}
     except:
