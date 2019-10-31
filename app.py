@@ -3,9 +3,13 @@ import pymongo
 from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
-from secrets import secret_key
-from secrets import mongo_uri
+from environs import Env
 
+env = Env()
+env.read_env()
+
+mongo_uri = env("MONGO_URI")
+secret_key = env("SECRET_KEY")
 
 
 

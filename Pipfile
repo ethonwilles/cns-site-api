@@ -13,6 +13,7 @@ gunicorn = "*"
 flask-heroku = "*"
 pymongo = "*"
 boto = "*"
+environs = "*"
 
 [requires]
 python_version = "3.7"
