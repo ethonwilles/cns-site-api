@@ -13,7 +13,6 @@ mongo_uri = env("MONGO_URI")
 secret_key = env("SECRET_KEY")
 
 
-
 app = Flask(__name__)
 
 
