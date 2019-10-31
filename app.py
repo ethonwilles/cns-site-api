@@ -3,6 +3,8 @@ import pymongo
 from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
+from secrets import secret_key
+from secrets import mongo_uri
 
 
 
