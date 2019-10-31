@@ -26,7 +26,6 @@ heroku = Heroku(app)
 @app.route('/log-submission' , methods=["POST"])
 def logger():
     
-
     try:
         name = request.json["name"]
         email = request.json["email"]
