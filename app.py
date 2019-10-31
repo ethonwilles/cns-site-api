@@ -4,6 +4,7 @@ from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
 from environs import Env
+from flask_heroku import Heroku
 
 env = Env()
 env.read_env()
@@ -20,6 +21,8 @@ CORS(app)
 client = pymongo.MongoClient(mongo_uri)
 db = client['conv']
 col = db['client_info']
+
+heroku = Heroku(app)
 
 @app.route('/log-submission' , methods=["POST"])
 def logger():
